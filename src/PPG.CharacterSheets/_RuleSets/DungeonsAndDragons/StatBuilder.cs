@@ -1,6 +1,6 @@
 ﻿using PPG.CharacterSheets.Characters.Services.Builders;
 
-namespace PPG.CharacterSheets._RuleSets.MalifaxTtB
+namespace PPG.CharacterSheets._RuleSets.DungeonsAndDragons
 {
     public class StatBuilder : BaseStatBuilderForEnumType<StatNames>
     {

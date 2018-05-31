@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace PPG.CharacterSheets.Characters.DTOs
 {
-    public class CharacterSummary : TypedCharacter<
-        Dictionary<string, int>,
-        Dictionary<string, string>
+    public class UpdateCharacter : TypedCharacter<
+        IEnumerable<KeyValuePair<string, int>>,
+        IEnumerable<KeyValuePair<string, string>>
     >
     {
     }

@@ -2,7 +2,7 @@
 {
     public enum RuleSet
     {
-        MalifauxTtB,
+        MalifauxTTB,
         DungeonsandDragons
     }
 }

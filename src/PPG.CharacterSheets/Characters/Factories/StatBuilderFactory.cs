@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using PPG.CharacterSheets._RuleSets;
-using PPG.CharacterSheets.Characters.Services;
+using PPG.CharacterSheets.Characters.Services.Builders;
 using PPG.CharacterSheets.ErrorHandling;
 
 namespace PPG.CharacterSheets.Characters.Factories
@@ -18,8 +18,10 @@ namespace PPG.CharacterSheets.Characters.Factories
         {
             switch (ruleSet)
             {
-                case RuleSet.MalifauxTtB:
-                    return _serviceProvider.ResolveKeyed<IStatBuilder>(RuleSet.MalifauxTtB);
+                case RuleSet.MalifauxTTB:
+                    return _serviceProvider.ResolveKeyed<IStatBuilder>(RuleSet.MalifauxTTB);
+                case RuleSet.DungeonsandDragons:
+                    return _serviceProvider.ResolveKeyed<IStatBuilder>(RuleSet.DungeonsandDragons);
                 default:
                     throw new PPGException($"Could not resolve a Stat Builder for the Rule Set {ruleSet}");
             }

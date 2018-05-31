@@ -8,8 +8,8 @@ namespace PPG.CharacterSheets.Characters.DTOs
 
         public string Ruleset { get; set; }
 
-        public Dictionary<string, int> Stats { get; set; }
+        public IEnumerable<KeyValuePair<string, int>> Stats { get; set; }
 
-        public Dictionary<string, string> MetaData { get; set; }
+        public IEnumerable<KeyValuePair<string, string>> MetaData { get; set; }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
+using System.Collections.Generic;
 
 namespace PPG.CharacterSheets.Migrations
 {
@@ -13,6 +15,8 @@ namespace PPG.CharacterSheets.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     CharacterName = table.Column<string>(nullable: true),
+                    Experience = table.Column<int>(nullable: false),
+                    MetaData = table.Column<string>(nullable: true),
                     RuleSet = table.Column<int>(nullable: false),
                     Stats = table.Column<string>(nullable: true)
                 },

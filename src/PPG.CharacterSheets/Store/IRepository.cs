@@ -1,4 +1,5 @@
 ﻿using PPG.CharacterSheets.Core;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PPG.CharacterSheets.Store
@@ -8,6 +9,7 @@ namespace PPG.CharacterSheets.Store
         Task<int> Create(TEntity entity);
 
         Task<TEntity> Read(int id);
+        Task<IQueryable<TEntity>> Read();
 
         Task<bool> Update(TEntity entity);
 

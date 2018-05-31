@@ -5,9 +5,9 @@ using PPG.CharacterSheets.Core.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace PPG.CharacterSheets.Characters.Services
+namespace PPG.CharacterSheets.Characters.Services.Mappers
 {
-    public class CharacterModelToEntityMapper : IMapper<Character, CharacterSummary>
+    public class CharacterSummaryToCharacterMapper : IMapper<Character, CharacterSummary>
     {
         public async Task<CharacterSummary> MapFrom(Character character)
         {

@@ -1,4 +1,5 @@
 ﻿using PPG.CharacterSheets.Core;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PPG.CharacterSheets.Store
@@ -25,9 +26,16 @@ namespace PPG.CharacterSheets.Store
             return entity;
         }
 
+        public async Task<IQueryable<TEntity>> Read()
+        {
+            var entities = _context.EntitySet.AsQueryable();
+            return entities;
+        }
+
         public async Task<bool> Update(TEntity entity)
         {
-            _context.EntitySet.Update(entity);
+            var entityToUpdate = await Read(entity.Id).ConfigureAwait(false);
+            entityToUpdate = entity;
             _context.SaveChanges();
             return true;
         }

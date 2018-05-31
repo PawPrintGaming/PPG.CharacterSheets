@@ -4,16 +4,18 @@ using PPG.CharacterSheets.Characters.Factories;
 using PPG.CharacterSheets.Core.Services;
 using PPG.CharacterSheets.ErrorHandling;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
-namespace PPG.CharacterSheets.Characters.Services
+namespace PPG.CharacterSheets.Characters.Services.Mappers
 {
-    public class CreateCharacterMapper : IMapper<CharacterSummary, CreateCharacter>
+    public class CreateCharacterToCharacterSummaryMapper : IMapper<CharacterSummary, CreateCharacter>
     {
         private readonly IMetaDataBuilderFactory _metaDataBuilderFactory;
         private readonly IStatBuilderFactory _statBuilderFactory;
 
-        public CreateCharacterMapper(IMetaDataBuilderFactory metaDataBuilderFactory, IStatBuilderFactory statBuilderFactory)
+        public CreateCharacterToCharacterSummaryMapper(IMetaDataBuilderFactory metaDataBuilderFactory, IStatBuilderFactory statBuilderFactory)
         {
             _metaDataBuilderFactory = metaDataBuilderFactory;
             _statBuilderFactory = statBuilderFactory;
@@ -28,10 +30,19 @@ namespace PPG.CharacterSheets.Characters.Services
             }
 
             var statBuilder = _statBuilderFactory.Resolve(ruleSet);
-            var defaultedStats = await statBuilder.Build(createCharacter.Stats).ConfigureAwait(false);
+            var dictionaryStats = new Dictionary<string, int>();
+            createCharacter.Stats?.ToList().ForEach(stat =>
+                dictionaryStats.Add(stat.Key, stat.Value)
+            );
+            var defaultedStats = await statBuilder.Build(dictionaryStats).ConfigureAwait(false);
 
             var metaDataBuilder = _metaDataBuilderFactory.Resolve(ruleSet);
-            var defaultedMetaData = await metaDataBuilder.Build(createCharacter.MetaData).ConfigureAwait(false);
+            var dictionaryMetaData = new Dictionary<string, string>();
+            createCharacter.MetaData?.ToList().ForEach(data =>
+            {
+                dictionaryMetaData.Add(data.Key, data.Value);
+            });
+            var defaultedMetaData = await metaDataBuilder.Build(dictionaryMetaData).ConfigureAwait(false);
 
             return new CharacterSummary
             {
