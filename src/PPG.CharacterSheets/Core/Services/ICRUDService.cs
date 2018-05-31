@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 
 namespace PPG.CharacterSheets.Core.Services
 {
@@ -7,8 +8,9 @@ namespace PPG.CharacterSheets.Core.Services
         Task<TModelType> Create(TModelType entity);
 
         Task<TModelType> Read(int id);
+        Task<IQueryable<TModelType>> Read();
 
-        Task Update(TModelType entity);
+        Task<TModelType> Update(TModelType entity);
 
         Task Delete(int id);
     }

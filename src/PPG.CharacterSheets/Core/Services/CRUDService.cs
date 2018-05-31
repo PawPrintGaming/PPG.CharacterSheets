@@ -1,4 +1,5 @@
 ﻿using PPG.CharacterSheets.Store;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PPG.CharacterSheets.Core.Services
@@ -30,11 +31,18 @@ namespace PPG.CharacterSheets.Core.Services
             return model;
         }
 
-        public async Task Update(TModelType model)
+        public async Task<IQueryable<TModelType>> Read()
         {
+            var entities = await _repository.Read().ConfigureAwait(false);
+            var models = entities.Select(entity => _mapper.MapFrom(entity).GetAwaiter().GetResult());
+            return models;
+        }
 
+        public async Task<TModelType> Update(TModelType model)
+        {
             var entity = await _mapper.MapTo(model).ConfigureAwait(false);
-            await _repository.Update(entity).ConfigureAwait(false);
+            var updatedModel = await _repository.Update(entity).ConfigureAwait(false);
+            return model;
         }
 
         public async Task Delete(int id)
