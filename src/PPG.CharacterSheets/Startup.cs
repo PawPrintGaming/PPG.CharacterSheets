@@ -38,7 +38,7 @@ namespace PPG.CharacterSheets
             services.AddMvc();
 
             // Set DB Contexts
-            services.AddDbContext<Context<Character>>();
+            services.AddDbContext<MigrationContext>();
 
             services.AddSingleton<CharactersSchema>();
 
@@ -58,8 +58,10 @@ namespace PPG.CharacterSheets
             builder.RegisterGeneric(typeof(Context<>)).AsSelf().InstancePerLifetimeScope();
             builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>));
             builder.RegisterGeneric(typeof(CRUDService<,>)).As(typeof(ICRUDService<,>));
+            builder.RegisterGeneric(typeof(PassThroughCRUDService<>)).As(typeof(ICRUDService<>));
 
             // Mappers
+            builder.RegisterGeneric(typeof(PassThroughMapper<>)).As(typeof(IMapper<>));
             builder.RegisterType<CharacterSummaryToCharacterMapper>().As<IMapper<Character, CharacterSummary>>();
             builder.RegisterType<CreateCharacterToCharacterSummaryMapper>().As<IMapper<CharacterSummary, CreateCharacter>>();
             builder.RegisterType<UpdateCharacterToCharacterSummaryMapper>().As<IMapper<CharacterSummary, UpdateCharacter>>();
