@@ -3,17 +3,22 @@ using GraphQL.Types;
 using PPG.CharacterSheets._RuleSets;
 using PPG.CharacterSheets.Characters.DTOs;
 using PPG.CharacterSheets.Characters.Entities;
+using PPG.CharacterSheets.Characters.Factories;
 using PPG.CharacterSheets.Core.Helpers;
 using PPG.CharacterSheets.Core.Services;
 using PPG.CharacterSheets.GraphQL.Types;
 using PPG.CharacterSheets.RuleSets.Entities;
 using System;
+using System.Threading.Tasks;
 
 namespace PPG.CharacterSheets.GraphQL
 {
-    public class CharactersQuery : QueryGraphType
+    public class Queries : QueryGraphType
     {
-        public CharactersQuery(ICRUDService<Character, CharacterSummary> characterCRUDService, ICRUDService<RuleSetInfo> ruleSetInfoCRUDService)
+        public Queries(
+            ICRUDService<Character, CharacterSummary> characterCRUDService, ICRUDService<RuleSetInfo> ruleSetInfoCRUDService,
+            ICreateCharacterInfoBuilderFactory createCharacterInfoBuilderFactory
+        )
         {
             Name = "Query";
 
@@ -34,6 +39,20 @@ namespace PPG.CharacterSheets.GraphQL
             Field<ListGraphType<RuleSetInfoType>>(
                 "ruleSetInfos",
                 resolve: context => ruleSetInfoCRUDService.Read()
+            );
+
+            Field<CreateCharacterInfoType>(
+                "createCharacterInfo",
+                arguments: new QueryArguments(new QueryArgument<EnumerationGraphType<RuleSet>> { Name = "ruleSet" }),
+                resolve: context =>
+                {
+                    return Task.Run(async () =>
+                    {
+                        var ruleSet = context.GetArgument<RuleSet>("ruleSet");
+                        var createCharacterInfo = await createCharacterInfoBuilderFactory.Resolve(ruleSet).Build(null).ConfigureAwait(false);
+                        return createCharacterInfo;
+                    });
+                }
             );
         }
     }

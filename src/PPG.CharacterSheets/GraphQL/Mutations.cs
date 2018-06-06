@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace PPG.CharacterSheets.GraphQL
 {
-    public class CharactersMutation : ObjectGraphType<CharacterSummary>
+    public class Mutations : ObjectGraphType<CharacterSummary>
     {
-        public CharactersMutation(
+        public Mutations(
             ICRUDService<Character, CharacterSummary> characterCRUDService,
             ICRUDService<RuleSetInfo> ruleSetInfoCRUDService,
             IMapper<CharacterSummary, CreateCharacter> createMapper,
@@ -20,6 +20,7 @@ namespace PPG.CharacterSheets.GraphQL
         )
         {
             Name = "Mutation";
+
             Field<CharacterSummaryType>(
                 "createCharacter",
                 arguments: new QueryArguments(new QueryArgument<NonNullGraphType<CreateCharacterType>> { Name = "createCharacter" }),
@@ -79,8 +80,34 @@ namespace PPG.CharacterSheets.GraphQL
                     return Task.Run(async () =>
                     {
                         var ruleSetInfo = context.GetArgument<RuleSetInfo>("createRuleSetInfo");
-                        var createdRuleSetInfo = await ruleSetInfoCRUDService.Create(ruleSetInfo);
-                        return createdRuleSetInfo;
+                        var updatedRuleSetInfo = await ruleSetInfoCRUDService.Create(ruleSetInfo);
+                        return updatedRuleSetInfo;
+                    });
+                }
+            );
+            Field<RuleSetInfoType>(
+                "updateRuleSetInfo",
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<UpdateRuleSetInfoType>> { Name = "updateRuleSetInfo" }),
+                resolve: context =>
+                {
+                    return Task.Run(async () =>
+                    {
+                        var ruleSetInfo = context.GetArgument<RuleSetInfo>("updateRuleSetInfo");
+                        var updatedRuleSetInfo = await ruleSetInfoCRUDService.Update(ruleSetInfo);
+                        return updatedRuleSetInfo;
+                    });
+                }
+            );
+            Field<BooleanGraphType>(
+                "deleteRuleSetInfo",
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "id" }),
+                resolve : context =>
+                {
+                    return Task.Run(async () =>
+                    {
+                        var id = context.GetArgument<int>("id");
+                        await ruleSetInfoCRUDService.Delete(id);
+                        return true;
                     });
                 }
             );

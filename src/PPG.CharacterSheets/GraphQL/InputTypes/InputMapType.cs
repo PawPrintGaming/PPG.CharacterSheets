@@ -7,7 +7,7 @@ namespace PPG.CharacterSheets.GraphQL.InputTypes
         public InputMapType()
         {
             Name = "InputMap";
-            Field<StringGraphType>("key");
+            Field<NonNullGraphType<StringGraphType>>("key");
             Field<TValueGraphType>("value");
         }
     }

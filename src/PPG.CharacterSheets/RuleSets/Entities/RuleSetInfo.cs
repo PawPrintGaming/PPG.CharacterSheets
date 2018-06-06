@@ -10,9 +10,15 @@ namespace PPG.CharacterSheets.RuleSets.Entities
         public int Id { get; set; }
 
         public string Name { get; set; }
-
+        
         public RuleSet RuleSet { get; set; }
 
-        public string CoverImageUrl { get; set; }
+        public string ImageUrl { get; set; }
+
+        public string Description { get; set; }
+
+        public string CreateCharacterPath { get; set; }
+
+        public string ViewCharacterPath { get; set; }
     }
 }

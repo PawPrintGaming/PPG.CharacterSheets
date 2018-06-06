@@ -47,34 +47,38 @@ namespace PPG.CharacterSheets
             services.AddTransient(typeof(EdgeType<>));
             services.AddTransient<NodeInterface>();
             services.AddTransient<PageInfoType>();
-            
-            var builder = new ContainerBuilder();
-            builder.Populate(services);
 
-            builder.RegisterType<DocumentExecuter>().As<IDocumentExecuter>();
-            builder.RegisterType<DocumentWriter>().As<IDocumentWriter>();
-
-            // Register Services
-            builder.RegisterGeneric(typeof(Context<>)).AsSelf().InstancePerLifetimeScope();
-            builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>));
-            builder.RegisterGeneric(typeof(CRUDService<,>)).As(typeof(ICRUDService<,>));
-            builder.RegisterGeneric(typeof(PassThroughCRUDService<>)).As(typeof(ICRUDService<>));
+            // General Services
+            services.AddScoped(typeof(Context<>));
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped(typeof(ICRUDService<,>), typeof(CRUDService<,>));
+            services.AddScoped(typeof(ICRUDService<>), typeof(PassThroughCRUDService<>));
 
             // Mappers
-            builder.RegisterGeneric(typeof(PassThroughMapper<>)).As(typeof(IMapper<>));
-            builder.RegisterType<CharacterSummaryToCharacterMapper>().As<IMapper<Character, CharacterSummary>>();
-            builder.RegisterType<CreateCharacterToCharacterSummaryMapper>().As<IMapper<CharacterSummary, CreateCharacter>>();
-            builder.RegisterType<UpdateCharacterToCharacterSummaryMapper>().As<IMapper<CharacterSummary, UpdateCharacter>>();
+            services.AddScoped(typeof(IMapper<>), typeof(PassThroughMapper<>));
+            services.AddScoped<IMapper<Character, CharacterSummary>, CharacterSummaryToCharacterMapper>();
+            services.AddScoped<IMapper<CharacterSummary, CreateCharacter>, CreateCharacterToCharacterSummaryMapper>();
+            services.AddScoped<IMapper<CharacterSummary, UpdateCharacter>, UpdateCharacterToCharacterSummaryMapper>();
 
-            // Builders
-            builder.RegisterType<_RuleSets.MalifaxTtB.StatBuilder>().Keyed<IStatBuilder>(RuleSet.MalifauxTTB);
-            builder.RegisterType<_RuleSets.MalifaxTtB.MetaDataBuilder>().Keyed<IMetaDataBuilder>(RuleSet.MalifauxTTB);
-            builder.RegisterType<_RuleSets.DungeonsAndDragons.StatBuilder>().Keyed<IStatBuilder>(RuleSet.DungeonsandDragons);
-            builder.RegisterType<_RuleSets.DungeonsAndDragons.MetaDataBuilder>().Keyed<IMetaDataBuilder>(RuleSet.DungeonsandDragons);
+            // GraphQL
+            services.AddSingleton<IDocumentExecuter, DocumentExecuter>();
+            services.AddSingleton<IDocumentWriter, DocumentWriter>();
 
             // Factories
-            builder.RegisterType<StatBuilderFactory>().As<IStatBuilderFactory>();
-            builder.RegisterType<MetaDataBuilderFactory>().As<IMetaDataBuilderFactory>();
+            services.AddScoped<IStatBuilderFactory, StatBuilderFactory>();
+            services.AddScoped<IMetaDataBuilderFactory, MetaDataBuilderFactory>();
+            services.AddScoped<ICreateCharacterInfoBuilderFactory, CreateCharacterInfoBuilderFactory>();
+                        
+            var builder = new ContainerBuilder();
+            builder.Populate(services);
+            
+            // Builders - Autofac because .Keyed<>()
+            builder.RegisterType<_RuleSets.MalifaxTtB.Builders.StatBuilder>().Keyed<IStatBuilder>(RuleSet.MalifauxTTB);
+            builder.RegisterType<_RuleSets.MalifaxTtB.Builders.MetaDataBuilder>().Keyed<IMetaDataBuilder>(RuleSet.MalifauxTTB);
+            builder.RegisterType<_RuleSets.MalifaxTtB.Builders.CreateCharacterInfoBuilder>().Keyed<ICreateCharacterInfoBuilder>(RuleSet.MalifauxTTB);
+
+            builder.RegisterType<_RuleSets.DungeonsAndDragons.Builders.StatBuilder>().Keyed<IStatBuilder>(RuleSet.DungeonsandDragons);
+            builder.RegisterType<_RuleSets.DungeonsAndDragons.Builders.MetaDataBuilder>().Keyed<IMetaDataBuilder>(RuleSet.DungeonsandDragons);
 
             return new AutofacServiceProvider(builder.Build());
         }

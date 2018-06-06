@@ -31,9 +31,12 @@ namespace PPG.CharacterSheets.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    CoverImageUrl = table.Column<string>(nullable: true),
+                    CreateCharacterPath = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    ImageUrl = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
-                    RuleSet = table.Column<int>(nullable: false)
+                    RuleSet = table.Column<int>(nullable: false),
+                    ViewCharacterPath = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

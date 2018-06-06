@@ -44,11 +44,17 @@ namespace PPG.CharacterSheets.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("CoverImageUrl");
+                    b.Property<string>("CreateCharacterPath");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("ImageUrl");
 
                     b.Property<string>("Name");
 
                     b.Property<int>("RuleSet");
+
+                    b.Property<string>("ViewCharacterPath");
 
                     b.HasKey("Id");
 

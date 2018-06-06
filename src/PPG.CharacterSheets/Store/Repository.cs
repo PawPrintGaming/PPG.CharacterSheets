@@ -22,7 +22,7 @@ namespace PPG.CharacterSheets.Store
 
         public async Task<TEntity> Read(int id)
         {
-            var entity = _context.EntitySet.Find(id);
+            var entity = _context.EntitySet.FirstOrDefault(e => e.Id == id);
             return entity;
         }
 
@@ -35,7 +35,7 @@ namespace PPG.CharacterSheets.Store
         public async Task<bool> Update(TEntity entity)
         {
             var entityToUpdate = await Read(entity.Id).ConfigureAwait(false);
-            entityToUpdate = entity;
+            _context.Entry(entityToUpdate).CurrentValues.SetValues(entity);
             _context.SaveChanges();
             return true;
         }

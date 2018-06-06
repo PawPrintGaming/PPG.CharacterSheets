@@ -2,13 +2,15 @@
 
 namespace PPG.CharacterSheets.GraphQL.Types
 {
-    public class MapType : ObjectGraphType
+    public class MapType<TValueGraphType> : ObjectGraphType where TValueGraphType : IGraphType
     {
         public MapType()
         {
             Name = "Map";
-            Field<StringGraphType>("key");
-            Field<StringGraphType>("value");
+            Field<NonNullGraphType<StringGraphType>>("key");
+            Field<TValueGraphType>("value");
         }
     }
+
+    public class MapType : MapType<StringGraphType> { }
 }

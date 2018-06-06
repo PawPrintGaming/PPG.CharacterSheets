@@ -1,6 +1,7 @@
 ﻿using GraphQL.Types;
 using PPG.CharacterSheets.Characters.DTOs;
 using PPG.CharacterSheets.Characters.Entities;
+using PPG.CharacterSheets.Characters.Factories;
 using PPG.CharacterSheets.Core.Services;
 using PPG.CharacterSheets.RuleSets.Entities;
 
@@ -12,11 +13,12 @@ namespace PPG.CharacterSheets.GraphQL
             ICRUDService<Character, CharacterSummary> characterCRUDService,
             ICRUDService<RuleSetInfo> ruleSetInfoCRUDService,
             IMapper<CharacterSummary, CreateCharacter> createMapper,
-            IMapper<CharacterSummary, UpdateCharacter> updateMapper
+            IMapper<CharacterSummary, UpdateCharacter> updateMapper,
+            ICreateCharacterInfoBuilderFactory createCharacterInfoBuilderFactory
         )
         {
-            Query = new CharactersQuery(characterCRUDService, ruleSetInfoCRUDService);
-            Mutation = new CharactersMutation(characterCRUDService, ruleSetInfoCRUDService, createMapper, updateMapper);
+            Query = new Queries(characterCRUDService, ruleSetInfoCRUDService, createCharacterInfoBuilderFactory);
+            Mutation = new Mutations(characterCRUDService, ruleSetInfoCRUDService, createMapper, updateMapper);
         }
     }
 }

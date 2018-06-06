@@ -24,9 +24,9 @@ namespace PPG.CharacterSheets.Characters.Services.Mappers
         public async Task<CharacterSummary> MapTo(CreateCharacter createCharacter)
         {
             RuleSet ruleSet;
-            if (!Enum.TryParse(createCharacter.Ruleset, out ruleSet))
+            if (!Enum.TryParse(createCharacter.RuleSet, out ruleSet))
             {
-                throw new PPGException($"Could not parse Rule Set {createCharacter.Ruleset}");
+                throw new PPGException($"Could not parse Rule Set {createCharacter.RuleSet}");
             }
 
             var statBuilder = _statBuilderFactory.Resolve(ruleSet);

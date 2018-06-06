@@ -10,8 +10,11 @@ namespace PPG.CharacterSheets.GraphQL.InputTypes
         {
             Name = "CreateRuleSetInfo";
             Field(x => x.Name);
-            Field(x => x.RuleSet, false, typeof(EnumerationGraphType<RuleSet>));
-            Field(x => x.CoverImageUrl);
+            Field(x => x.RuleSet, false, typeof(NonNullGraphType<EnumerationGraphType<RuleSet>>));
+            Field(x => x.ImageUrl, false, typeof(NonNullGraphType<StringGraphType>));
+            Field(x => x.Description, true);
+            Field(x => x.CreateCharacterPath, false, typeof(NonNullGraphType<StringGraphType>));
+            Field(x => x.ViewCharacterPath, false, typeof(NonNullGraphType<StringGraphType>));
         }
     }
 }
