@@ -4,11 +4,11 @@ using PPG.CharacterSheets.Characters.DTOs;
 
 namespace PPG.CharacterSheets.GraphQL.Types
 {
-    public class CreateCharacterInfoType : ObjectGraphType<CreateCharacterInfo>
+    public class CharacterRuleSetInfoType : ObjectGraphType<CharacterRuleSetInfo>
     {
-        public CreateCharacterInfoType()
+        public CharacterRuleSetInfoType()
         {
-            Name = "CreateCharacterInfo";
+            Name = "CharacterRuleSetInfo";
             Field(x => x.RuleSet, false, typeof(NonNullGraphType<EnumerationGraphType<RuleSet>>));
             Field(x => x.StatSets, false, typeof(NonNullGraphType<ListGraphType<MapType>>));
             Field(x => x.DataLists, false, typeof(NonNullGraphType<ListGraphType<MapType>>));

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace PPG.CharacterSheets.Characters.DTOs
 {
-    public class CreateCharacterInfo
+    public class CharacterRuleSetInfo
     {
         public RuleSet RuleSet { get; set; }
         public Dictionary<string, IEnumerable<string>> StatSets { get; set; }

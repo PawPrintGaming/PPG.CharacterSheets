@@ -14,14 +14,14 @@ namespace PPG.CharacterSheets.Characters.Factories
             _serviceProvider = serviceProvider;
         }
 
-        public ICreateCharacterInfoBuilder Resolve(RuleSet ruleSet)
+        public ICharacterRuleSetInfoBuilder Resolve(RuleSet ruleSet)
         {
             switch (ruleSet)
             {
                 case RuleSet.MalifauxTTB:
-                    return _serviceProvider.ResolveKeyed<ICreateCharacterInfoBuilder>(RuleSet.MalifauxTTB);
+                    return _serviceProvider.ResolveKeyed<ICharacterRuleSetInfoBuilder>(RuleSet.MalifauxTTB);
                 case RuleSet.DungeonsandDragons:
-                    return _serviceProvider.ResolveKeyed<ICreateCharacterInfoBuilder>(RuleSet.DungeonsandDragons);
+                    return _serviceProvider.ResolveKeyed<ICharacterRuleSetInfoBuilder>(RuleSet.DungeonsandDragons);
                 default:
                     throw new PPGException($"Could not resolve a Meta Data Builder for the Rule Set {ruleSet}");
             }

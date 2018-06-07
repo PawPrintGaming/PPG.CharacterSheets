@@ -75,10 +75,11 @@ namespace PPG.CharacterSheets
             // Builders - Autofac because .Keyed<>()
             builder.RegisterType<_RuleSets.MalifaxTtB.Builders.StatBuilder>().Keyed<IStatBuilder>(RuleSet.MalifauxTTB);
             builder.RegisterType<_RuleSets.MalifaxTtB.Builders.MetaDataBuilder>().Keyed<IMetaDataBuilder>(RuleSet.MalifauxTTB);
-            builder.RegisterType<_RuleSets.MalifaxTtB.Builders.CreateCharacterInfoBuilder>().Keyed<ICreateCharacterInfoBuilder>(RuleSet.MalifauxTTB);
+            builder.RegisterType<_RuleSets.MalifaxTtB.Builders.CharacterRuleSetInfoBuilder>().Keyed<ICharacterRuleSetInfoBuilder>(RuleSet.MalifauxTTB);
 
             builder.RegisterType<_RuleSets.DungeonsAndDragons.Builders.StatBuilder>().Keyed<IStatBuilder>(RuleSet.DungeonsandDragons);
             builder.RegisterType<_RuleSets.DungeonsAndDragons.Builders.MetaDataBuilder>().Keyed<IMetaDataBuilder>(RuleSet.DungeonsandDragons);
+            builder.RegisterType<_RuleSets.DungeonsAndDragons.Builders.CharacterRuleSetInfoBuilder>().Keyed<ICharacterRuleSetInfoBuilder>(RuleSet.DungeonsandDragons);
 
             return new AutofacServiceProvider(builder.Build());
         }

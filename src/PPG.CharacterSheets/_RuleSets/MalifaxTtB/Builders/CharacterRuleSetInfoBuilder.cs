@@ -8,9 +8,9 @@ using PPG.CharacterSheets.Core.Helpers;
 
 namespace PPG.CharacterSheets._RuleSets.MalifaxTtB.Builders
 {
-    public class CreateCharacterInfoBuilder : ICreateCharacterInfoBuilder
+    public class CharacterRuleSetInfoBuilder : ICharacterRuleSetInfoBuilder
     {
-        public async Task<CreateCharacterInfo> Build(CreateCharacterInfo build, bool trim = true)
+        public async Task<CharacterRuleSetInfo> Build(CharacterRuleSetInfo build, bool trim = true)
         {
             return await Task.Run(() => {
                 var physical = new List<StatNames> { StatNames.Might, StatNames.Grace, StatNames.Speed, StatNames.Resilience };
@@ -29,7 +29,7 @@ namespace PPG.CharacterSheets._RuleSets.MalifaxTtB.Builders
                     {"Pursuits", pursuits}
                 };
 
-                return new CreateCharacterInfo
+                return new CharacterRuleSetInfo
                 {
                     StatSets = statSets,
                     DataLists = dataLists

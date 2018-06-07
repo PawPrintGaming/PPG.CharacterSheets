@@ -41,8 +41,8 @@ namespace PPG.CharacterSheets.GraphQL
                 resolve: context => ruleSetInfoCRUDService.Read()
             );
 
-            Field<CreateCharacterInfoType>(
-                "createCharacterInfo",
+            Field<CharacterRuleSetInfoType>(
+                "characterRuleSetInfo",
                 arguments: new QueryArguments(new QueryArgument<EnumerationGraphType<RuleSet>> { Name = "ruleSet" }),
                 resolve: context =>
                 {

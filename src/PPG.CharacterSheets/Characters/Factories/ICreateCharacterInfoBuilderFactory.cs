@@ -5,6 +5,6 @@ namespace PPG.CharacterSheets.Characters.Factories
 {
     public interface ICreateCharacterInfoBuilderFactory
     {
-        ICreateCharacterInfoBuilder Resolve(RuleSet ruleSet);
+        ICharacterRuleSetInfoBuilder Resolve(RuleSet ruleSet);
     }
 }

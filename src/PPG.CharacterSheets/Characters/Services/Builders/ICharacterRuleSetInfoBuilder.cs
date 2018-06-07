@@ -3,7 +3,7 @@ using PPG.CharacterSheets.Core.Services;
 
 namespace PPG.CharacterSheets.Characters.Services.Builders
 {
-    public interface ICreateCharacterInfoBuilder : IBuilder<CreateCharacterInfo>
+    public interface ICharacterRuleSetInfoBuilder : IBuilder<CharacterRuleSetInfo>
     {
     }
 }

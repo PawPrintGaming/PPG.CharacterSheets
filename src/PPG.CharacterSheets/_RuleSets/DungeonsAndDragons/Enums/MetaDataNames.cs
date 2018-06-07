@@ -2,8 +2,6 @@
 {
     public enum MetaDataNames
     {
-        Class,
-        Level,
         Background,
         Race,
         Alignment
