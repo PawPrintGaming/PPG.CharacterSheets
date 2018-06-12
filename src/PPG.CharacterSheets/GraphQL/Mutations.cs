@@ -2,10 +2,12 @@
 using Newtonsoft.Json;
 using PPG.CharacterSheets.Characters.DTOs;
 using PPG.CharacterSheets.Characters.Entities;
+using PPG.CharacterSheets.Characters.Services;
 using PPG.CharacterSheets.Core.Services;
 using PPG.CharacterSheets.GraphQL.InputTypes;
 using PPG.CharacterSheets.GraphQL.Types;
 using PPG.CharacterSheets.RuleSets.Entities;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace PPG.CharacterSheets.GraphQL
@@ -16,7 +18,8 @@ namespace PPG.CharacterSheets.GraphQL
             ICRUDService<Character, CharacterSummary> characterCRUDService,
             ICRUDService<RuleSetInfo> ruleSetInfoCRUDService,
             IMapper<CharacterSummary, CreateCharacter> createMapper,
-            IMapper<CharacterSummary, UpdateCharacter> updateMapper
+            IMapper<CharacterSummary, UpdateCharacter> updateMapper,
+            ICharacterPolymorphService characterPolymorphService
         )
         {
             Name = "Mutation";
@@ -68,6 +71,23 @@ namespace PPG.CharacterSheets.GraphQL
                         var id = context.GetArgument<int>("id");
                         await characterCRUDService.Delete(id);
                         return true;
+                    });
+                }
+            );
+
+            Field<CharacterSummaryType>(
+                "updateCharacterProperty",
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "id" }, new QueryArgument<InputMapType<StringGraphType>> { Name = "update" }),
+                resolve: context =>
+                {
+                    return Task.Run(async () =>
+                    {
+                        var id = context.GetArgument<int>("id");
+                        var update = context.GetArgument<Dictionary<string, object>>("update");
+                        var character = await characterCRUDService.Read(id).ConfigureAwait(false);
+                        var morphedCharacter =  await characterPolymorphService.UpdatePropertyByName(character, update["key"] as string, update["value"]).ConfigureAwait(false);
+                        var updatedCharacter = await characterCRUDService.Update(morphedCharacter).ConfigureAwait(false);
+                        return updatedCharacter;
                     });
                 }
             );

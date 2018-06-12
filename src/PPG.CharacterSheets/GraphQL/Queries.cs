@@ -8,7 +8,6 @@ using PPG.CharacterSheets.Core.Helpers;
 using PPG.CharacterSheets.Core.Services;
 using PPG.CharacterSheets.GraphQL.Types;
 using PPG.CharacterSheets.RuleSets.Entities;
-using System;
 using System.Threading.Tasks;
 
 namespace PPG.CharacterSheets.GraphQL
