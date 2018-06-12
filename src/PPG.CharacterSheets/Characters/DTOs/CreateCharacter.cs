@@ -6,7 +6,7 @@ namespace PPG.CharacterSheets.Characters.DTOs
     {
         public string CharacterName { get; set; }
 
-        public string Ruleset { get; set; }
+        public string RuleSet { get; set; }
 
         public IEnumerable<KeyValuePair<string, int>> Stats { get; set; }
 

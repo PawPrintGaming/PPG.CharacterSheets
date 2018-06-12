@@ -9,5 +9,11 @@ namespace PPG.CharacterSheets.Core.Helpers
         {
             return Enum.GetNames(typeof(TType));
         }
+
+        public static IEnumerable<TType> GetAllValues<TType>() where TType : struct, IConvertible
+        {
+            var test = Enum.GetValues(typeof(TType)) as IEnumerable<TType>;
+            return test;
+        }
     }
 }

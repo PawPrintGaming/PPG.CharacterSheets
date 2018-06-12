@@ -8,4 +8,6 @@ namespace PPG.CharacterSheets.Core.Services
 
         Task<TEntityFrom> MapFrom(TEntityTo to);
     }
+
+    public interface IMapper<TEntityType> : IMapper<TEntityType, TEntityType> { }
 }

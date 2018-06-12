@@ -1,4 +1,4 @@
-﻿namespace PPG.CharacterSheets._RuleSets.DungeonsAndDragons
+﻿namespace PPG.CharacterSheets._RuleSets.DungeonsAndDragons.Enums
 {
     public enum StatNames
     {

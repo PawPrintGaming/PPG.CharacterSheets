@@ -14,4 +14,6 @@ namespace PPG.CharacterSheets.Core.Services
 
         Task Delete(int id);
     }
+
+    public interface ICRUDService<TEntityType> : ICRUDService<TEntityType, TEntityType> where TEntityType : class, IIdentifiable { }
 }

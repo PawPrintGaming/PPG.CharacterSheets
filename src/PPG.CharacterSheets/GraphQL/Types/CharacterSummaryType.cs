@@ -10,12 +10,12 @@ namespace PPG.CharacterSheets.GraphQL.Types
         public CharacterSummaryType()
         {
             Name = "CharacterSummary";
-            Field<NonNullGraphType<IdGraphType>>(nameof(CharacterSummary.Id), resolve: context => context.Source.Id);
-            Field(x => x.CharacterName);
-            Field(x => x.RuleSet, false, typeof(EnumerationGraphType<RuleSet>));
-            Field(x => x.Experience);
-            Field<ListGraphType<MapType>>(nameof(CharacterSummary.Stats), resolve: context => context.Source.Stats);
-            Field<ListGraphType<MapType>>(nameof(CharacterSummary.MetaData), resolve: context => context.Source.MetaData);
+            Field(x => x.Id, false, typeof(NonNullGraphType<IdGraphType>));
+            Field(x => x.CharacterName, false, typeof(NonNullGraphType<StringGraphType>));
+            Field(x => x.RuleSet, false, typeof(NonNullGraphType<EnumerationGraphType<RuleSet>>));
+            Field(x => x.Experience, false, typeof(NonNullGraphType<StringGraphType>));
+            Field(x => x.Stats, false, typeof(NonNullGraphType<ListGraphType<MapType>>));
+            Field(x => x.MetaData, false, typeof(NonNullGraphType<ListGraphType<MapType>>));
         }
 
         public override CharacterSummary GetById(string id)

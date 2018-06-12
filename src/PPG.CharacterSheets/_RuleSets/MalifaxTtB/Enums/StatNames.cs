@@ -1,4 +1,4 @@
-﻿namespace PPG.CharacterSheets._RuleSets.MalifaxTtB
+﻿namespace PPG.CharacterSheets._RuleSets.MalifaxTtB.Enums
 {
     public enum StatNames
     {

@@ -1,7 +1,6 @@
 ﻿using GraphQL.Types;
 using PPG.CharacterSheets._RuleSets;
 using PPG.CharacterSheets.Characters.DTOs;
-using PPG.CharacterSheets.GraphQL.Helpers;
 
 namespace PPG.CharacterSheets.GraphQL.InputTypes
 {
@@ -10,12 +9,12 @@ namespace PPG.CharacterSheets.GraphQL.InputTypes
         public UpdateCharacterType()
         {
             Name = "UpdateCharacter";
-            Field(x => x.Id);
-            Field(x => x.CharacterName);
-            Field(x => x.RuleSet, false, typeof(EnumerationGraphType<RuleSet>));
-            Field(x => x.Experience);
-            Field<ListGraphType<InputMapType<IntGraphType>>>(nameof(CharacterSummary.Stats), resolve: context => context.Source.Stats.AsMapType());
-            Field<ListGraphType<InputMapType<StringGraphType>>>(nameof(CharacterSummary.MetaData), resolve: context => context.Source.MetaData.AsMapType());
+            Field(x => x.Id, false, typeof(NonNullGraphType<IdGraphType>));
+            Field(x => x.CharacterName, false, typeof(NonNullGraphType<StringGraphType>));
+            Field(x => x.RuleSet, false, typeof(NonNullGraphType<EnumerationGraphType<RuleSet>>));
+            Field(x => x.Experience, false, typeof(NonNullGraphType<IntGraphType>));
+            Field(x => x.Stats, false, typeof(NonNullGraphType<ListGraphType<InputMapType<IntGraphType>>>));
+            Field(x => x.MetaData, false, typeof(NonNullGraphType<ListGraphType<InputMapType<StringGraphType>>>));
 
         }
     }
