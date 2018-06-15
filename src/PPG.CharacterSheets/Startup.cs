@@ -15,6 +15,7 @@ using PPG.CharacterSheets._RuleSets;
 using PPG.CharacterSheets.Characters.DTOs;
 using PPG.CharacterSheets.Characters.Entities;
 using PPG.CharacterSheets.Characters.Factories;
+using PPG.CharacterSheets.Characters.Services;
 using PPG.CharacterSheets.Characters.Services.Builders;
 using PPG.CharacterSheets.Characters.Services.Mappers;
 using PPG.CharacterSheets.Core.Services;
@@ -53,6 +54,7 @@ namespace PPG.CharacterSheets
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(ICRUDService<,>), typeof(CRUDService<,>));
             services.AddScoped(typeof(ICRUDService<>), typeof(PassThroughCRUDService<>));
+            services.AddScoped<ICharacterPolymorphService, CharacterPolymorphService>();
 
             // Mappers
             services.AddScoped(typeof(IMapper<>), typeof(PassThroughMapper<>));
