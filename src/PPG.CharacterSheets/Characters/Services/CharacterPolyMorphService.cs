@@ -25,10 +25,40 @@ namespace PPG.CharacterSheets.Characters.Services
                 propertyInfo.SetValue(characterSummary, value);
                 return characterSummary;
             }
-            catch
+            catch (InvalidCastException)
             {
                 throw new PPGException($"Cannot assign {value} to property {propName} of Type {propertyInfo.PropertyType.Name} on Character Summary");
             }
+        }
+
+        public async Task<CharacterSummary> UpdateStatByName(CharacterSummary characterSummary, string statName, object value)
+        {
+            if (!int.TryParse(value.ToString(), out int castValue))
+            {
+                throw new PPGException($"Cannot convert {value} of type {value.GetType().Name} to an integer, not suitable for updating Character Summary Stat");
+            }
+            if (characterSummary.Stats.ContainsKey(statName))
+            {
+                characterSummary.Stats[statName] = castValue;
+            }
+            else
+            {
+                characterSummary.Stats.Add(statName, castValue);
+            }
+            return characterSummary;
+        }
+
+        public async Task<CharacterSummary> UpdateMetaData(CharacterSummary characterSummary, string dataKey, string value)
+        {
+            if (characterSummary.MetaData.ContainsKey(dataKey))
+            {
+                characterSummary.MetaData[dataKey] = value;
+            }
+            else
+            {
+                characterSummary.MetaData.Add(dataKey, value);
+            }
+            return characterSummary;
         }
     }
 }

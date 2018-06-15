@@ -77,7 +77,7 @@ namespace PPG.CharacterSheets.GraphQL
 
             Field<CharacterSummaryType>(
                 "updateCharacterProperty",
-                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "id" }, new QueryArgument<InputMapType<StringGraphType>> { Name = "update" }),
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "id" }, new QueryArgument<NonNullGraphType<InputMapType<StringGraphType>>> { Name = "update" }),
                 resolve: context =>
                 {
                     return Task.Run(async () =>
@@ -86,6 +86,39 @@ namespace PPG.CharacterSheets.GraphQL
                         var update = context.GetArgument<Dictionary<string, object>>("update");
                         var character = await characterCRUDService.Read(id).ConfigureAwait(false);
                         var morphedCharacter =  await characterPolymorphService.UpdatePropertyByName(character, update["key"] as string, update["value"]).ConfigureAwait(false);
+                        var updatedCharacter = await characterCRUDService.Update(morphedCharacter).ConfigureAwait(false);
+                        return updatedCharacter;
+                    });
+                }
+            );
+            Field<CharacterSummaryType>(
+                "updateCharacterStat",
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "id" }, new QueryArgument<NonNullGraphType<InputMapType<StringGraphType>>> { Name = "update" }),
+                resolve: context =>
+                {
+                    return Task.Run(async () =>
+                    {
+                        var id = context.GetArgument<int>("id");
+                        var update = context.GetArgument<Dictionary<string, object>>("update");
+                        var character = await characterCRUDService.Read(id).ConfigureAwait(false);
+                        var morphedCharacter = await characterPolymorphService.UpdateStatByName(character, update["key"] as string, update["value"]).ConfigureAwait(false);
+                        var updatedCharacter = await characterCRUDService.Update(morphedCharacter).ConfigureAwait(false);
+                        return updatedCharacter;
+                    });
+                }
+            );
+
+            Field<CharacterSummaryType>(
+                "updateCharacterMetaData",
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "id" }, new QueryArgument<NonNullGraphType<InputMapType<StringGraphType>>> { Name = "update" }),
+                resolve: context =>
+                {
+                    return Task.Run(async () =>
+                    {
+                        var id = context.GetArgument<int>("id");
+                        var update = context.GetArgument<Dictionary<string, object>>("update");
+                        var character = await characterCRUDService.Read(id).ConfigureAwait(false);
+                        var morphedCharacter = await characterPolymorphService.UpdateMetaData(character, update["key"] as string, update["value"] as string).ConfigureAwait(false);
                         var updatedCharacter = await characterCRUDService.Update(morphedCharacter).ConfigureAwait(false);
                         return updatedCharacter;
                     });
