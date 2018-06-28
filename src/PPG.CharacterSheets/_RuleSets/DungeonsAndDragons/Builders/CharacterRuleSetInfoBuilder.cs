@@ -13,13 +13,37 @@ namespace PPG.CharacterSheets._RuleSets.DungeonsAndDragons.Builders
     {
         public async Task<CharacterRuleSetInfo> Build(CharacterRuleSetInfo build, bool trim = true)
         {
+            return await Task.Run(async () =>
+            {
+                var statSets = await BuildStatSets().ConfigureAwait(false);
+                var dataLists = await BuildDataLists().ConfigureAwait(false);
+                var skillInfoSets = await BuildSkillInfoSets().ConfigureAwait(false);
+
+                return new CharacterRuleSetInfo
+                {
+                    StatSets = statSets,
+                    DataLists = dataLists,
+                    SkillInfoSets = skillInfoSets
+                };
+            });
+        }
+
+        private async Task<Dictionary<string, IEnumerable<string>>> BuildStatSets()
+        {
             return await Task.Run(() =>
             {
                 var stats = EnumHelper.GetAllStringValesForEnum<StatNames>().Select(s => s.AddSpacesToCamelCase());
                 var statSets = new Dictionary<string, IEnumerable<string>> {
                     {"stats", stats}
                 };
+                return statSets;
+            });
+        }
 
+        private async Task<Dictionary<string, IEnumerable<string>>> BuildDataLists()
+        {
+            return await Task.Run(() =>
+            {
                 var alignments = AlignmentsHelper.GetAlignments();
                 var backgrounds = EnumHelper.GetAllStringValesForEnum<Backgrounds>().Select(s => s.AddSpacesToCamelCase());
                 var classes = EnumHelper.GetAllStringValesForEnum<Classes>().Select(s => s.AddSpacesToCamelCase());
@@ -30,12 +54,15 @@ namespace PPG.CharacterSheets._RuleSets.DungeonsAndDragons.Builders
                     {"Classes", classes},
                     {"Races", races }
                 };
-
-                return new CharacterRuleSetInfo
-                {
-                    StatSets = statSets,
-                    DataLists = dataLists
-                };
+                return dataLists;
+            });
+        }
+        
+        private async Task<Dictionary<string, IEnumerable<SkillInfo>>> BuildSkillInfoSets()
+        {
+            return await Task.Run(() =>
+            {
+                return new Dictionary<string, IEnumerable<SkillInfo>>();
             });
         }
     }

@@ -7,8 +7,11 @@ using PPG.CharacterSheets.Core.Services;
 using PPG.CharacterSheets.GraphQL.InputTypes;
 using PPG.CharacterSheets.GraphQL.Types;
 using PPG.CharacterSheets.RuleSets.Entities;
+using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using PPG.CharacterSheets.Characters.Factories;
 
 namespace PPG.CharacterSheets.GraphQL
 {
@@ -19,7 +22,8 @@ namespace PPG.CharacterSheets.GraphQL
             ICRUDService<RuleSetInfo> ruleSetInfoCRUDService,
             IMapper<CharacterSummary, CreateCharacter> createMapper,
             IMapper<CharacterSummary, UpdateCharacter> updateMapper,
-            ICharacterPolymorphService characterPolymorphService
+            ICharacterPolymorphService characterPolymorphService,
+            ISkillMapperFactory skillMapperFactory
         )
         {
             Name = "Mutation";
@@ -77,7 +81,7 @@ namespace PPG.CharacterSheets.GraphQL
 
             Field<CharacterSummaryType>(
                 "updateCharacterProperty",
-                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "id" }, new QueryArgument<NonNullGraphType<InputMapType<StringGraphType>>> { Name = "update" }),
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "id" }, new QueryArgument<NonNullGraphType<StringInputMapType>> { Name = "update" }),
                 resolve: context =>
                 {
                     return Task.Run(async () =>
@@ -93,7 +97,7 @@ namespace PPG.CharacterSheets.GraphQL
             );
             Field<CharacterSummaryType>(
                 "updateCharacterStat",
-                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "id" }, new QueryArgument<NonNullGraphType<InputMapType<StringGraphType>>> { Name = "update" }),
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "id" }, new QueryArgument<NonNullGraphType<IntInputMapType>> { Name = "update" }),
                 resolve: context =>
                 {
                     return Task.Run(async () =>
@@ -107,10 +111,79 @@ namespace PPG.CharacterSheets.GraphQL
                     });
                 }
             );
+            Field<CharacterSummaryType>(
+                "upsertCharacterSkill",
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "id" }, new QueryArgument<NonNullGraphType<SkillInputType>> { Name = "skill" }),
+                resolve: context =>
+                {
+                    return Task.Run(async () =>
+                    {
+                        var id = context.GetArgument<int>("id");
+                        var character = await characterCRUDService.Read(id).ConfigureAwait(false);
+                        var createSkill = JsonConvert.DeserializeObject<CreateSkill>(JsonConvert.SerializeObject(context.Arguments["skill"]));
+                        var skill = (await skillMapperFactory.Resolve(character.RuleSet).MapTo(new[] { createSkill }).ConfigureAwait(false)).First();
+                        var morphedCharacter = await characterPolymorphService.UpsertSkillByName(character, skill).ConfigureAwait(false);
+                        var updateCharacter = await characterCRUDService.Update(character).ConfigureAwait(false);
+                        return updateCharacter;
+                    });
+                }
+            );
+            //Field<CharacterSummaryType>(
+            //    "updateCharacterSkillRank",
+            //    arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "id" }, new QueryArgument<NonNullGraphType<IntInputMapType>> { Name = "update" }),
+            //    resolve: context =>
+            //    {
+            //        return Task.Run(async () =>
+            //        {
+            //            var id = context.GetArgument<int>("id");
+            //            var update = context.GetArgument<Dictionary<string, object>>("update");
+            //            var character = await characterCRUDService.Read(id).ConfigureAwait(false);
+            //            var morphedCharacter = await characterPolymorphService.UpdateSkillRank(character, update["key"] as string, update["value"]).ConfigureAwait(false);
+            //            var updateCharacter = await characterCRUDService.Update(character).ConfigureAwait(false);
+            //            return updateCharacter;
+            //        });
+            //    }
+            //);
+            //Field<CharacterSummaryType>(
+            //    "updateCharacterSkillTriggerDescription",
+            //    arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "id" }, new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "skillName" }, new QueryArgument<NonNullGraphType<StringInputMapType>> { Name = "update" }),
+            //    resolve: context =>
+            //    {
+            //        return Task.Run(async () =>
+            //        {
+            //            var id = context.GetArgument<int>("id");
+            //            var skillName = context.GetArgument<string>("skillName");
+            //            var update = context.GetArgument<Dictionary<string, object>>("update");
+            //            var character = await characterCRUDService.Read(id).ConfigureAwait(false);
+            //            var morphedCharacter = await characterPolymorphService.UpdateSkillTriggerDescription(character, skillName, update["key"] as string, update["value"] as string).ConfigureAwait(false);
+            //            var updateCharacter = await characterCRUDService.Update(character).ConfigureAwait(false);
+            //            return updateCharacter;
+            //        });
+            //    }
+            //);
+            //Field<CharacterSummaryType>(
+            //    "deleteSkillTrigger",
+            //    arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "id" }, new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "skillName" }, new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "triggerName" }),
+            //    resolve: context =>
+            //    {
+            //        return Task.Run(async () =>
+            //        {
+            //            var id = context.GetArgument<int>("id");
+            //            var skillName = context.GetArgument<string>("skillName");
+            //            var triggerName = context.GetArgument<string>("triggerName");
+            //            var character = await characterCRUDService.Read(id).ConfigureAwait(false);
+            //            var morphedCharacter = await characterPolymorphService.DeleteSkillTrigger(character, skillName, triggerName).ConfigureAwait(false);
+            //            var updatedCharacter = await characterCRUDService.Update(morphedCharacter).ConfigureAwait(false);
+            //            return updatedCharacter;
+
+            //        });
+            //    }
+            //);
+
 
             Field<CharacterSummaryType>(
                 "updateCharacterMetaData",
-                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "id" }, new QueryArgument<NonNullGraphType<InputMapType<StringGraphType>>> { Name = "update" }),
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "id" }, new QueryArgument<NonNullGraphType<StringInputMapType>> { Name = "update" }),
                 resolve: context =>
                 {
                     return Task.Run(async () =>

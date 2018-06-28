@@ -16,11 +16,12 @@ namespace PPG.CharacterSheets.GraphQL
             IMapper<CharacterSummary, CreateCharacter> createMapper,
             IMapper<CharacterSummary, UpdateCharacter> updateMapper,
             ICreateCharacterInfoBuilderFactory createCharacterInfoBuilderFactory,
-            ICharacterPolymorphService characterPolymorphService
+            ICharacterPolymorphService characterPolymorphService,
+            ISkillMapperFactory skillMapperFactory
         )
         {
             Query = new Queries(characterCRUDService, ruleSetInfoCRUDService, createCharacterInfoBuilderFactory);
-            Mutation = new Mutations(characterCRUDService, ruleSetInfoCRUDService, createMapper, updateMapper, characterPolymorphService);
+            Mutation = new Mutations(characterCRUDService, ruleSetInfoCRUDService, createMapper, updateMapper, characterPolymorphService, skillMapperFactory);
         }
     }
 }

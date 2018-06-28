@@ -32,6 +32,8 @@ namespace PPG.CharacterSheets.Migrations
 
                     b.Property<int>("RuleSet");
 
+                    b.Property<string>("Skills");
+
                     b.Property<string>("Stats");
 
                     b.HasKey("Id");
