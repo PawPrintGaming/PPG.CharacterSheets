@@ -7,6 +7,7 @@ namespace PPG.CharacterSheets.Characters.DTOs
     {
         public RuleSet RuleSet { get; set; }
         public Dictionary<string, IEnumerable<string>> StatSets { get; set; }
+        public Dictionary<string, IEnumerable<SkillInfo>> SkillInfoSets { get; set; }
         public Dictionary<string, IEnumerable<string>> DataLists { get; set; }
     }
 }

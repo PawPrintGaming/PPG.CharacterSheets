@@ -10,8 +10,9 @@ namespace PPG.CharacterSheets.GraphQL.Types
         {
             Name = "CharacterRuleSetInfo";
             Field(x => x.RuleSet, false, typeof(NonNullGraphType<EnumerationGraphType<RuleSet>>));
-            Field(x => x.StatSets, false, typeof(NonNullGraphType<ListGraphType<MapType>>));
-            Field(x => x.DataLists, false, typeof(NonNullGraphType<ListGraphType<MapType>>));
+            Field(x => x.StatSets, false, typeof(NonNullGraphType<ListGraphType<StringListGraphType>>));
+            Field(x => x.SkillInfoSets, false, typeof(NonNullGraphType<ListGraphType<SkillInfoMapType>>));
+            Field(x => x.DataLists, false, typeof(NonNullGraphType<ListGraphType<StringListGraphType>>));
         }
     }
 }

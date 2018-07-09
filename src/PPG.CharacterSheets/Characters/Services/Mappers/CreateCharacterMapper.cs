@@ -13,11 +13,13 @@ namespace PPG.CharacterSheets.Characters.Services.Mappers
     public class CreateCharacterToCharacterSummaryMapper : IMapper<CharacterSummary, CreateCharacter>
     {
         private readonly IMetaDataBuilderFactory _metaDataBuilderFactory;
+        private readonly ISkillMapperFactory _skillMapperFactory;
         private readonly IStatBuilderFactory _statBuilderFactory;
 
-        public CreateCharacterToCharacterSummaryMapper(IMetaDataBuilderFactory metaDataBuilderFactory, IStatBuilderFactory statBuilderFactory)
+        public CreateCharacterToCharacterSummaryMapper(IMetaDataBuilderFactory metaDataBuilderFactory, ISkillMapperFactory skillMapperFactory,IStatBuilderFactory statBuilderFactory)
         {
             _metaDataBuilderFactory = metaDataBuilderFactory;
+            _skillMapperFactory = skillMapperFactory;
             _statBuilderFactory = statBuilderFactory;
         }
 
@@ -44,13 +46,17 @@ namespace PPG.CharacterSheets.Characters.Services.Mappers
             });
             var defaultedMetaData = await metaDataBuilder.Build(dictionaryMetaData).ConfigureAwait(false);
 
+            var skillMapper = _skillMapperFactory.Resolve(ruleSet);
+            var skills = await skillMapper.MapTo(createCharacter.Skills).ConfigureAwait(false);
+            
             return new CharacterSummary
             {
                 CharacterName = createCharacter.CharacterName,
                 RuleSet = ruleSet,
                 Experience = 0,
                 Stats = defaultedStats,
-                MetaData = defaultedMetaData
+                MetaData = defaultedMetaData,
+                Skills = skills
             };
         }
 

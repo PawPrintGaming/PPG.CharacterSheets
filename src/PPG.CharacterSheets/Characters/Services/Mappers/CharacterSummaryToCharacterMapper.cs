@@ -20,8 +20,10 @@ namespace PPG.CharacterSheets.Characters.Services.Mappers
                     CharacterName = character.CharacterName,
                     RuleSet = character.RuleSet,
                     Experience = character.Experience,
-                    Stats = JsonConvert.DeserializeObject<Dictionary<string, int>>(character.Stats),
-                    MetaData = JsonConvert.DeserializeObject<Dictionary<string, string>>(character.MetaData)
+                    Stats = JsonConvert.DeserializeObject<Dictionary<string, int>>(character?.Stats ?? "{}"),
+                    MetaData = JsonConvert.DeserializeObject<Dictionary<string, string>>(character?.MetaData ?? "{}"),
+                    Skills = JsonConvert.DeserializeObject<IEnumerable<Skill>>(character.Skills ?? "[]"),
+                    //Classes = JsonConvert.DeserializeObject<IEnumerable<Class>>(character.Classes ?? "[]")
                 };
 
         }
@@ -37,7 +39,9 @@ namespace PPG.CharacterSheets.Characters.Services.Mappers
                     RuleSet = characterSummary.RuleSet,
                     Experience = characterSummary.Experience,
                     Stats = JsonConvert.SerializeObject(characterSummary.Stats),
-                    MetaData = JsonConvert.SerializeObject(characterSummary.MetaData)
+                    MetaData = JsonConvert.SerializeObject(characterSummary.MetaData),
+                    Skills = JsonConvert.SerializeObject(characterSummary.Skills),
+                    //Classes = JsonConvert.SerializeObject(characterSummary.Classes)
                 };
         }
     }

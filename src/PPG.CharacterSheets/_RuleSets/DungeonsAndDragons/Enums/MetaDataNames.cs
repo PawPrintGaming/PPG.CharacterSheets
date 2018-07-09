@@ -4,6 +4,7 @@
     {
         Background,
         Race,
-        Alignment
+        Alignment,
+        ProficiencyBonus
     }
 }
