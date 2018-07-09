@@ -22,11 +22,11 @@ namespace PPG.CharacterSheets.Characters.Services.Mappers
                     {
                         Name = createSkill.Name,
                         Rank = createSkill.Rank,
-                        MetaData = createSkill.MetaData.ToDictionary(
+                        MetaData = createSkill.MetaData?.ToDictionary(
                             kvpA => kvpA.Key,
-                            kvpA => kvpA.Value.ToDictionary(
+                            kvpA => kvpA.Value?.ToDictionary(
                                 kvpB => kvpB.Key,
-                                kvpB => kvpB.Value.ToDictionary(
+                                kvpB => kvpB.Value?.ToDictionary(
                                     kvpC => kvpC.Key,
                                     kvpC => kvpC.Value
                                 )
