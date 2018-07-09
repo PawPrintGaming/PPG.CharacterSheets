@@ -20,5 +20,7 @@ namespace PPG.CharacterSheets.Characters.Entities
         public string MetaData { get; set; }
 
         public string Skills { get; set; }
+
+        //public string Classes { get; set; }
     }
 }

@@ -21,6 +21,7 @@ namespace PPG.CharacterSheets._RuleSets.DungeonsAndDragons.Builders
 
                 return new CharacterRuleSetInfo
                 {
+                    RuleSet = RuleSet.DungeonsandDragons,
                     StatSets = statSets,
                     DataLists = dataLists,
                     SkillInfoSets = skillInfoSets
@@ -62,7 +63,9 @@ namespace PPG.CharacterSheets._RuleSets.DungeonsAndDragons.Builders
         {
             return await Task.Run(() =>
             {
-                return new Dictionary<string, IEnumerable<SkillInfo>>();
+                return new Dictionary<string, IEnumerable<SkillInfo>>()
+                    .AddDefaultSkills()
+                    .AddSavingThrows();
             });
         }
     }

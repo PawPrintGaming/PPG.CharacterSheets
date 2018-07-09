@@ -19,5 +19,7 @@ namespace PPG.CharacterSheets.Characters.DTOs
         public Dictionary<string, string> MetaData { get; set; }
 
         public IEnumerable<Skill> Skills { get; set; }
+
+        //public IEnumerable<Class> Classes { get; set; }
     }
 }
