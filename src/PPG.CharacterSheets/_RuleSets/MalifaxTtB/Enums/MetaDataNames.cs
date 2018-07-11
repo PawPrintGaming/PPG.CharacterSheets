@@ -4,6 +4,8 @@
     {
         CurrentPursuit,
         Station,
-        DestinyStepsFulfilled
+        DestinyStepsFulfilled,
+        CurrentWounds,
+        Height
     }
 }
