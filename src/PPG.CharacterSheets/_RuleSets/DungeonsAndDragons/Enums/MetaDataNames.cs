@@ -12,6 +12,10 @@
         TemporaryHitPoints,
         HitDiceValue,
         MaxNumberOfHitDice,
-        CurrentNumberOfHitDice
+        CurrentNumberOfHitDice,
+        PersonalityTraits,
+        Ideals,
+        Bonds,
+        Flaws
     }
 }
