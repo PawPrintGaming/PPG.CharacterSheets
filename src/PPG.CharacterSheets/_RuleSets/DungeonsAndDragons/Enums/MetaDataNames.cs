@@ -5,6 +5,13 @@
         Background,
         Race,
         Alignment,
-        ProficiencyBonus
+        ProficiencyBonus,
+        BaseSpeed,
+        MaximumHitPoints,
+        CurrentHitPoints,
+        TemporaryHitPoints,
+        HitDiceValue,
+        MaxNumberOfHitDice,
+        CurrentNumberOfHitDice
     }
 }
