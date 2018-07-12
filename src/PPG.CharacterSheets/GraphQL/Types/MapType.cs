@@ -22,6 +22,11 @@ namespace PPG.CharacterSheets.GraphQL.Types
     {
         public override string MapName => "StringList";
     }
+
+    public class FloatMapType : MapType<FloatGraphType>
+    {
+        public override string MapName => "Float";
+    }
     
     public class SkillMetaDataMapType : MapType<ListGraphType<MapType<ListGraphType<StringMapType>>>>
     {

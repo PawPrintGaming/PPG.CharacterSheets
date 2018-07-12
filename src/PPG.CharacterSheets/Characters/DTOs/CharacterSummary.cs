@@ -20,6 +20,8 @@ namespace PPG.CharacterSheets.Characters.DTOs
 
         public IEnumerable<Skill> Skills { get; set; }
 
+        public Dictionary<string, double> Wallets { get; set; }
+
         //public IEnumerable<Class> Classes { get; set; }
     }
 }

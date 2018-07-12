@@ -21,6 +21,8 @@ namespace PPG.CharacterSheets.Characters.Entities
 
         public string Skills { get; set; }
 
+        public string Wallets { get; set; }
+
         //public string Classes { get; set; }
     }
 }

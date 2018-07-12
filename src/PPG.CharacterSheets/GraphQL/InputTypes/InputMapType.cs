@@ -23,6 +23,11 @@ namespace PPG.CharacterSheets.GraphQL.InputTypes
         public override string MapName => "Int";
     }
 
+    public class FloatInputMapType : InputMapType<FloatGraphType>
+    {
+        public override string MapName => "Float";
+    }
+
     public class DictionaryStringMapType : InputMapType<ListGraphType<StringInputMapType>>
     {
         public override string MapName => "StringDictionary";

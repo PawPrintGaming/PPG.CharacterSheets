@@ -48,7 +48,12 @@ namespace PPG.CharacterSheets.Characters.Services.Mappers
 
             var skillMapper = _skillMapperFactory.Resolve(ruleSet);
             var skills = await skillMapper.MapTo(createCharacter.Skills).ConfigureAwait(false);
-            
+
+            var wallets = new Dictionary<string, double>();
+            createCharacter.Wallets?.ToList().ForEach(wallet =>
+                wallets.Add(wallet.Key, wallet.Value)
+            );
+
             return new CharacterSummary
             {
                 CharacterName = createCharacter.CharacterName,
@@ -56,7 +61,8 @@ namespace PPG.CharacterSheets.Characters.Services.Mappers
                 Experience = 0,
                 Stats = defaultedStats,
                 MetaData = defaultedMetaData,
-                Skills = skills
+                Skills = skills,
+                Wallets = wallets
             };
         }
 
