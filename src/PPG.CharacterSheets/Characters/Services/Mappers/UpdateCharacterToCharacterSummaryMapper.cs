@@ -20,7 +20,6 @@ namespace PPG.CharacterSheets.Characters.Services.Mappers
                 Id = update.Id,
                 CharacterName = update.CharacterName,
                 RuleSet = update.RuleSet,
-                Experience = update.Experience,
                 Stats = update.Stats.AsDictionary(),
                 MetaData = update.MetaData.AsDictionary()
             };

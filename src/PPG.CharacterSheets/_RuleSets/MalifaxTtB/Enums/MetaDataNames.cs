@@ -6,6 +6,7 @@
         Station,
         DestinyStepsFulfilled,
         CurrentWounds,
-        Height
+        Height,
+        Experience
     }
 }

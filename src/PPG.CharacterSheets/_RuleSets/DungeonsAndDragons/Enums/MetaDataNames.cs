@@ -5,6 +5,7 @@
         Background,
         Race,
         Alignment,
+        Experience,
         ProficiencyBonus,
         BaseSpeed,
         MaximumHitPoints,

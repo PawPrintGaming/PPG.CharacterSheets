@@ -58,7 +58,6 @@ namespace PPG.CharacterSheets.Characters.Services.Mappers
             {
                 CharacterName = createCharacter.CharacterName,
                 RuleSet = ruleSet,
-                Experience = 0,
                 Stats = defaultedStats,
                 MetaData = defaultedMetaData,
                 Skills = skills,

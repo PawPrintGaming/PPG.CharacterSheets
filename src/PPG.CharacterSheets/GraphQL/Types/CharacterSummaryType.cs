@@ -13,7 +13,6 @@ namespace PPG.CharacterSheets.GraphQL.Types
             Field(x => x.Id, false, typeof(NonNullGraphType<IdGraphType>));
             Field(x => x.CharacterName, false, typeof(NonNullGraphType<StringGraphType>));
             Field(x => x.RuleSet, false, typeof(NonNullGraphType<EnumerationGraphType<RuleSet>>));
-            Field(x => x.Experience, false, typeof(NonNullGraphType<StringGraphType>));
             Field(x => x.Stats, false, typeof(NonNullGraphType<ListGraphType<StringMapType>>));
             Field(x => x.MetaData, false, typeof(NonNullGraphType<ListGraphType<StringMapType>>));
             Field(x => x.Skills, false, typeof(NonNullGraphType<ListGraphType<SkillType>>));

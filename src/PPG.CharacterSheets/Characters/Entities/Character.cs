@@ -13,8 +13,6 @@ namespace PPG.CharacterSheets.Characters.Entities
 
         public RuleSet RuleSet { get; set; }
 
-        public int Experience { get; set; }
-
         public string Stats { get; set; }
 
         public string MetaData { get; set; }
