@@ -12,7 +12,6 @@ namespace PPG.CharacterSheets.GraphQL.InputTypes
             Field(x => x.Id, false, typeof(NonNullGraphType<IdGraphType>));
             Field(x => x.CharacterName, false, typeof(NonNullGraphType<StringGraphType>));
             Field(x => x.RuleSet, false, typeof(NonNullGraphType<EnumerationGraphType<RuleSet>>));
-            Field(x => x.Experience, false, typeof(NonNullGraphType<IntGraphType>));
             Field(x => x.Stats, false, typeof(NonNullGraphType<ListGraphType<IntInputMapType>>));
             Field(x => x.MetaData, false, typeof(NonNullGraphType<ListGraphType<StringInputMapType>>));
             Field(x => x.Skills, true, typeof(ListGraphType<SkillInputType>));

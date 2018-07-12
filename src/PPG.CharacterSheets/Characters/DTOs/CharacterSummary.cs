@@ -12,8 +12,6 @@ namespace PPG.CharacterSheets.Characters.DTOs
 
         public RuleSet RuleSet { get; set; }
 
-        public int Experience { get; set; }
-
         public Dictionary<string, int> Stats { get; set; }
 
         public Dictionary<string, string> MetaData { get; set; }
