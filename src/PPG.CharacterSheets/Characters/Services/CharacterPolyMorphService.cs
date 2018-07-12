@@ -139,5 +139,21 @@ namespace PPG.CharacterSheets.Characters.Services
                 return characterSummary;
             });
         }
+
+        public async Task<CharacterSummary> UpsertCharacterWallet(CharacterSummary characterSummary, string walletName, double newValue)
+        {
+            return await Task.Run(() =>
+            {
+                if (characterSummary.Wallets.ContainsKey(walletName))
+                {
+                    characterSummary.Wallets[walletName] = newValue;
+                }
+                else
+                {
+                    characterSummary.Wallets.Add(walletName, newValue); 
+                }
+                return characterSummary;
+            });
+        }
     }
 }
