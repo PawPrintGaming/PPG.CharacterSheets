@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace PPG.CharacterSheets.Migrations
 {
-    public partial class InitalCreate : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,11 +15,12 @@ namespace PPG.CharacterSheets.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     CharacterName = table.Column<string>(nullable: true),
-                    Experience = table.Column<int>(nullable: false),
+                    Classes = table.Column<string>(nullable: true),
                     MetaData = table.Column<string>(nullable: true),
                     RuleSet = table.Column<int>(nullable: false),
                     Skills = table.Column<string>(nullable: true),
-                    Stats = table.Column<string>(nullable: true)
+                    Stats = table.Column<string>(nullable: true),
+                    Wallets = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

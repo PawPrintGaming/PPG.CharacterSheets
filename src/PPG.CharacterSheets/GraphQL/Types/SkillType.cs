@@ -10,7 +10,7 @@ namespace PPG.CharacterSheets.GraphQL.Types
             Name = "Skill";
             Field(x => x.Name, false, typeof(NonNullGraphType<StringGraphType>));
             Field(x => x.Rank, false, typeof(NonNullGraphType<IntGraphType>));
-            Field(x => x.MetaData, true, typeof(ListGraphType<SkillMetaDataMapType>));
+            Field(x => x.MetaData, true, typeof(ListGraphType<CategorisedMetaDataMapType>));
         }
     }
 }

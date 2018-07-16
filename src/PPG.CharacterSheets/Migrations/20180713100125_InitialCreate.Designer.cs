@@ -11,8 +11,8 @@ using System;
 namespace PPG.CharacterSheets.Migrations
 {
     [DbContext(typeof(MigrationContext))]
-    [Migration("20180712091251_AddWallets")]
-    partial class AddWallets
+    [Migration("20180713100125_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,7 +27,7 @@ namespace PPG.CharacterSheets.Migrations
 
                     b.Property<string>("CharacterName");
 
-                    b.Property<int>("Experience");
+                    b.Property<string>("Classes");
 
                     b.Property<string>("MetaData");
 

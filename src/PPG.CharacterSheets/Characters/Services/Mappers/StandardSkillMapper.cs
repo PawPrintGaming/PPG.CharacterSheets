@@ -8,14 +8,14 @@ namespace PPG.CharacterSheets.Characters.Services.Mappers
 {
     public class StandardSkillMapper : ISkillMapper
     {
-        public Task<IEnumerable<CreateSkill>> MapFrom(IEnumerable<Skill> to)
+        public async Task<IEnumerable<CreateSkill>> MapFrom(IEnumerable<Skill> to)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<IEnumerable<Skill>> MapTo(IEnumerable<CreateSkill> from)
+        public async Task<IEnumerable<Skill>> MapTo(IEnumerable<CreateSkill> from)
         {
-            return Task.Run(() =>
+            return await Task.Run(() =>
             {
                 return from.Select(createSkill =>
                     new Skill

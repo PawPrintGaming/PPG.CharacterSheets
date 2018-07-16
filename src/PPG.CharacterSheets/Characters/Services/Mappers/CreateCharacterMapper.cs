@@ -12,12 +12,16 @@ namespace PPG.CharacterSheets.Characters.Services.Mappers
 {
     public class CreateCharacterToCharacterSummaryMapper : IMapper<CharacterSummary, CreateCharacter>
     {
+        private readonly IAbilityMapperFactory _abilityMapperFactory;
+        private readonly IClassMapperFactory _classMapperFactory;
         private readonly IMetaDataBuilderFactory _metaDataBuilderFactory;
         private readonly ISkillMapperFactory _skillMapperFactory;
         private readonly IStatBuilderFactory _statBuilderFactory;
 
-        public CreateCharacterToCharacterSummaryMapper(IMetaDataBuilderFactory metaDataBuilderFactory, ISkillMapperFactory skillMapperFactory,IStatBuilderFactory statBuilderFactory)
+        public CreateCharacterToCharacterSummaryMapper(IAbilityMapperFactory abilityMapperFactory, IClassMapperFactory classMapperFactory, IMetaDataBuilderFactory metaDataBuilderFactory, ISkillMapperFactory skillMapperFactory,IStatBuilderFactory statBuilderFactory)
         {
+            _abilityMapperFactory = abilityMapperFactory;
+            _classMapperFactory = classMapperFactory;
             _metaDataBuilderFactory = metaDataBuilderFactory;
             _skillMapperFactory = skillMapperFactory;
             _statBuilderFactory = statBuilderFactory;
@@ -54,6 +58,12 @@ namespace PPG.CharacterSheets.Characters.Services.Mappers
                 wallets.Add(wallet.Key, wallet.Value)
             );
 
+            var classMapper = _classMapperFactory.Resolve(ruleSet);
+            var classes = await classMapper.MapTo(createCharacter.Classes).ConfigureAwait(false);
+
+            var abilityMapper = _abilityMapperFactory.Resolve(ruleSet);
+            var abilities = await abilityMapper.MapTo(createCharacter.Abilities).ConfigureAwait(false);
+
             return new CharacterSummary
             {
                 CharacterName = createCharacter.CharacterName,
@@ -61,7 +71,9 @@ namespace PPG.CharacterSheets.Characters.Services.Mappers
                 Stats = defaultedStats,
                 MetaData = defaultedMetaData,
                 Skills = skills,
-                Wallets = wallets
+                Wallets = wallets,
+                Classes = classes,
+                Abilities = abilities
             };
         }
 

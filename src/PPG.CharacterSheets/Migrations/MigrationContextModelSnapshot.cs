@@ -24,9 +24,11 @@ namespace PPG.CharacterSheets.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Abilities");
+
                     b.Property<string>("CharacterName");
 
-                    b.Property<int>("Experience");
+                    b.Property<string>("Classes");
 
                     b.Property<string>("MetaData");
 

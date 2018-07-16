@@ -15,6 +15,8 @@ namespace PPG.CharacterSheets.GraphQL.InputTypes
             Field(x => x.MetaData, true, typeof(ListGraphType<StringInputMapType>));
             Field(x => x.Skills, true, typeof(ListGraphType<SkillInputType>));
             Field(x => x.Wallets, true, typeof(ListGraphType<FloatInputMapType>));
+            Field(x => x.Classes, true, typeof(ListGraphType<ClassInputType>));
+            Field(x => x.Abilities, true, typeof(ListGraphType<AbilityInputType>));
         }
     }
 }

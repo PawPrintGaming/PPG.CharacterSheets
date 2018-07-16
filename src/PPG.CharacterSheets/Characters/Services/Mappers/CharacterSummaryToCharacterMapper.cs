@@ -11,8 +11,8 @@ namespace PPG.CharacterSheets.Characters.Services.Mappers
     {
         public async Task<CharacterSummary> MapFrom(Character character)
         {
-            
-            return character == null
+
+            return await Task.Run(() => character == null
                 ? null
                 : new CharacterSummary
                 {
@@ -23,14 +23,15 @@ namespace PPG.CharacterSheets.Characters.Services.Mappers
                     MetaData = JsonConvert.DeserializeObject<Dictionary<string, string>>(character?.MetaData ?? "{}"),
                     Skills = JsonConvert.DeserializeObject<IEnumerable<Skill>>(character.Skills ?? "[]"),
                     Wallets = JsonConvert.DeserializeObject<Dictionary<string, double>>(character.Wallets ?? "[]"),
-                    //Classes = JsonConvert.DeserializeObject<IEnumerable<Class>>(character.Classes ?? "[]")
-                };
-
+                    Classes = JsonConvert.DeserializeObject<IEnumerable<Class>>(character.Classes ?? "[]"),
+                    Abilities = JsonConvert.DeserializeObject<IEnumerable<Ability>>(character.Abilities ?? "[]")
+                }
+            );
         }
 
         public async Task<Character> MapTo(CharacterSummary characterSummary)
         {
-            return characterSummary == null
+            return await Task.Run(() => characterSummary == null
                 ? null
                 : new Character
                 {
@@ -40,9 +41,11 @@ namespace PPG.CharacterSheets.Characters.Services.Mappers
                     Stats = JsonConvert.SerializeObject(characterSummary.Stats),
                     MetaData = JsonConvert.SerializeObject(characterSummary.MetaData),
                     Skills = JsonConvert.SerializeObject(characterSummary.Skills),
-                    Wallets = JsonConvert.SerializeObject(characterSummary.Wallets)
-                    //Classes = JsonConvert.SerializeObject(characterSummary.Classes)
-                };
+                    Wallets = JsonConvert.SerializeObject(characterSummary.Wallets),
+                    Classes = JsonConvert.SerializeObject(characterSummary.Classes),
+                    Abilities = JsonConvert.SerializeObject(characterSummary.Abilities)
+                }
+            );
         }
     }
 }

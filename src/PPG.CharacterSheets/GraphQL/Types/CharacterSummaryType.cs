@@ -17,6 +17,8 @@ namespace PPG.CharacterSheets.GraphQL.Types
             Field(x => x.MetaData, false, typeof(NonNullGraphType<ListGraphType<StringMapType>>));
             Field(x => x.Skills, false, typeof(NonNullGraphType<ListGraphType<SkillType>>));
             Field(x => x.Wallets, true, typeof(ListGraphType<FloatMapType>));
+            Field(x => x.Classes, true, typeof(ListGraphType<ClassType>));
+            Field(x => x.Abilities, true, typeof(ListGraphType<AbilityType>));
         }
 
         public override CharacterSummary GetById(string id)

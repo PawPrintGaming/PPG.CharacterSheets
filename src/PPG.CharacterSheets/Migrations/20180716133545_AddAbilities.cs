@@ -4,12 +4,12 @@ using System.Collections.Generic;
 
 namespace PPG.CharacterSheets.Migrations
 {
-    public partial class AddWallets : Migration
+    public partial class AddAbilities : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "Wallets",
+                name: "Abilities",
                 table: "Characters",
                 nullable: true);
         }
@@ -17,7 +17,7 @@ namespace PPG.CharacterSheets.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Wallets",
+                name: "Abilities",
                 table: "Characters");
         }
     }

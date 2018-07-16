@@ -62,6 +62,8 @@ namespace PPG.CharacterSheets
             services.AddScoped<IMapper<CharacterSummary, CreateCharacter>, CreateCharacterToCharacterSummaryMapper>();
             services.AddScoped<IMapper<CharacterSummary, UpdateCharacter>, UpdateCharacterToCharacterSummaryMapper>();
             services.AddScoped<ISkillMapper, StandardSkillMapper>();
+            services.AddScoped<IClassMapper, StandardClassMapper>();
+            services.AddScoped<IAbilityMapper, StandardAbilityMapper>();
 
             // GraphQL
             services.AddSingleton<IDocumentExecuter, DocumentExecuter>();
@@ -72,6 +74,8 @@ namespace PPG.CharacterSheets
             services.AddScoped<IMetaDataBuilderFactory, MetaDataBuilderFactory>();
             services.AddScoped<ICreateCharacterInfoBuilderFactory, CreateCharacterInfoBuilderFactory>();
             services.AddScoped<ISkillMapperFactory, SkillMapperFactory>();
+            services.AddScoped<IClassMapperFactory, ClassMapperFactory>();
+            services.AddScoped<IAbilityMapperFactory, AbilityMapperFactory>();
                         
             var builder = new ContainerBuilder();
             builder.Populate(services);

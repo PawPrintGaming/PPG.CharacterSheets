@@ -33,8 +33,8 @@ namespace PPG.CharacterSheets.GraphQL.InputTypes
         public override string MapName => "StringDictionary";
     }
 
-    public class SkillMetaDataInputMapType : InputMapType<ListGraphType<InputMapType<ListGraphType<StringInputMapType>>>>
+    public class CategorisedMetaDataInputMapType : InputMapType<ListGraphType<InputMapType<ListGraphType<StringInputMapType>>>>
     {
-        public override string MapName => "SkillMetaData";
+        public override string MapName => "CategorisedMetaData";
     }
 }
